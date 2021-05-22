@@ -35,6 +35,12 @@ function App() {
         type: "SET_PLAYLISTS",
         playlists: playlists,
       });
+
+      const response = await spotify.getPlaylist("37i9dQZEVXcOTexYdO1E0r");
+      dispatch({
+        type: "SET_DISCOVER_WEEKLY",
+        discover_weekly: response,
+      });
     }
   };
 

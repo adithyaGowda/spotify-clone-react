@@ -4,8 +4,10 @@ import SidebarOption from "./SidebarOption";
 import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from "@material-ui/icons/Search";
 import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
+import { useStateProviderValue } from "./StateProvider";
 
 const Sidebar = () => {
+  const [{ playlists }, dispatch] = useStateProviderValue();
   return (
     <div className="sidebar">
       <img
@@ -16,14 +18,14 @@ const Sidebar = () => {
       <SidebarOption option="Home" Icon={HomeIcon} />
       <SidebarOption option="Search" Icon={SearchIcon} />
       <SidebarOption option="Your Library" Icon={LibraryMusicIcon} />
-      
+
       <br />
       <strong className="sidebar__title">PLAYLISTS</strong>
       <hr />
-      
-      <SidebarOption option="Hip hop" />
-      <SidebarOption option="Rock" />
-      <SidebarOption option="Rnb" />
+
+      {playlists?.items?.map((playlist) => {
+        return <SidebarOption option={playlist.name} />;
+      })}
     </div>
   );
 };

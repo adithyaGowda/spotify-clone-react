@@ -29,6 +29,12 @@ function App() {
         type: "SET_USER",
         user: user,
       });
+
+      const playlists = await spotify.getUserPlaylists();
+      dispatch({
+        type: "SET_PLAYLISTS",
+        playlists: playlists,
+      });
     }
   };
 

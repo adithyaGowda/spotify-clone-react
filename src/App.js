@@ -9,7 +9,7 @@ import { useStateProviderValue } from "./StateProvider";
 const spotify = new SpotifyWebApi();
 
 function App() {
-  const [{ user, token }, dispatch] = useStateProviderValue();
+  const [{ token }, dispatch] = useStateProviderValue();
 
   const fetchData = async () => {
     const hash = getTokenFromUrl();

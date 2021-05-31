@@ -8,7 +8,7 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import SongRow from "./SongRow";
 
 const Body = ({ spotify }) => {
-  const [{ discover_weekly }, dispatch] = useStateProviderValue();
+  const [{ discover_weekly }] = useStateProviderValue();
   return (
     <div className="body">
       <Header spotify={spotify} />

@@ -1,4 +1,4 @@
-import { useEffect,useCallback } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import Login from "./Login";
 import { getTokenFromUrl } from "./spotify";
@@ -11,7 +11,7 @@ const spotify = new SpotifyWebApi();
 function App() {
   const [{ token }, dispatch] = useStateProviderValue();
 
-  const fetchData = useCallback(async () => {
+  const fetchData = async () => {
     const hash = getTokenFromUrl();
     window.location.hash = "";
     const _token = hash.access_token;
@@ -42,11 +42,11 @@ function App() {
         discover_weekly: response,
       });
     }
-  },[])
+  };
   //Run code based on a given condition
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, [dispatch]);
 
   return (
     <div className="app">

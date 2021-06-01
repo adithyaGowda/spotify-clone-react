@@ -11,43 +11,42 @@ const spotify = new SpotifyWebApi();
 function App() {
   const [{ token }, dispatch] = useStateProviderValue();
 
+  const fetchData = async () => {
+    const hash = getTokenFromUrl();
+    window.location.hash = "";
+    const _token = hash.access_token;
+
+    if (_token) {
+      dispatch({
+        type: "SET_TOKEN",
+        token: _token,
+      });
+
+      spotify.setAccessToken(_token);
+
+      const user = await spotify.getMe();
+      dispatch({
+        type: "SET_USER",
+        user: user,
+      });
+
+      const playlists = await spotify.getUserPlaylists();
+      dispatch({
+        type: "SET_PLAYLISTS",
+        playlists: playlists,
+      });
+
+      const response = await spotify.getPlaylist("37i9dQZEVXcOTexYdO1E0r");
+      dispatch({
+        type: "SET_DISCOVER_WEEKLY",
+        discover_weekly: response,
+      });
+    }
+  };
   //Run code based on a given condition
   useEffect(() => {
-    const fetchData = async () => {
-      const hash = getTokenFromUrl();
-      window.location.hash = "";
-      const _token = hash.access_token;
-  
-      if (_token) {
-        dispatch({
-          type: "SET_TOKEN",
-          token: _token,
-        });
-  
-        spotify.setAccessToken(_token);
-  
-        const user = await spotify.getMe();
-        dispatch({
-          type: "SET_USER",
-          user: user,
-        });
-  
-        const playlists = await spotify.getUserPlaylists();
-        dispatch({
-          type: "SET_PLAYLISTS",
-          playlists: playlists,
-        });
-  
-        const response = await spotify.getPlaylist("37i9dQZEVXcOTexYdO1E0r");
-        dispatch({
-          type: "SET_DISCOVER_WEEKLY",
-          discover_weekly: response,
-        });
-      }
-    };
-  
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return (
     <div className="app">
